@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="ball.js"></script>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        let w = canvas.width = 800;
+        let h = canvas.height = 600;
+ 
+        const ball = new Ball({
+            x: w/2,
+            y: h/2,
+            r: 35,
+        }).render(ctx);
+
+        // let vx = 0;
+        let vy = 0;
+        // let a = 0.1;
+        let g = 0.2;
+        let friction = 0.05;    //摩擦力
+        let fristMove = true;
+ 
+        (function move() {
+            window.requestAnimationFrame(move);
+            ctx.clearRect(0, 0, w, h);
+            if(!fristMove) {
+                vy += g;
+            }
+            if(vy > 0 && vy - friction > 0) {    //小球下降， 速度减小
+                vy -= friction;
+            } else if(vy < 0 && vy + friction < 0) {    // 小球上升，速递加大
+                vy += friction;
+            } else {    // 当速度越来越小，< 0.05时，停止运动
+                vy = 0;
+            }
+            // ball.x += vx;
+            // ball.y += vy;
+            // vx += a;
+            // vy += a;
+
+            ball.y += vy;
+            // 边界反弹
+            if(ball.y + ball.r >= h) {    
+                ball.y = h - ball.r;    // 球落在最低点
+                vy *= -0.8;    // 速度向量取反（*-1），同时反弹高度小于原始落点高度
+            }
+            ball.render(ctx);
+            fristMove = false;
+        })();
+    </script> 
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="ball.js"></script>
+</head>
+<body>
+   <canvas id="canvas"></canvas>
+   <script>
+       const canvas = document.getElementById("canvas");
+       const ctx = canvas.getContext("2d");
+       let w = canvas.width = 800;
+       let h = canvas.height = 600;
+
+       const ball = new Ball({
+           x: w/2,
+           y: h/2,
+           r: 50
+       }).render(ctx);
+
+       let initScale = 1;
+       let angle = 0;
+    //    const SWTNG = 0.5;    // 振幅
+    //    const SWTNG = 160;    // 振幅
+       const SWTNG = 60;    // 振幅
+       let vx = 1;
+       let vy = 0.5;
+
+       (function move() {
+           window.requestAnimationFrame(move);
+           ctx.clearRect(0, 0, w, h);
+        //    ball.scaleX = ball.scaleY = initScale = Math.sin(angle) * SWTNG;    // 放大缩小动画
+        //    ball.x = w / 2 + Math.sin(angle) * SWTNG;    // 左右来回移动
+           ball.x += vx;
+           ball.y = h / 2 + Math.sin(angle) * SWTNG;    // 正弦运动
+           angle += 0.05;
+           angle %= Math.PI * 2;    // 对角度取模
+
+           ball.render(ctx);
+       })();
+   </script> 
+</body>
+</html>

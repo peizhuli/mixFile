@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="ball.js"></script>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        let w = canvas.width = 800;
+        let h = canvas.height = 600;
+ 
+        const ball = new Ball({
+            x: w/2,
+            y: h/2,
+            r: 35
+        }).render(ctx);
+
+
+        let r = 150;
+        let angle = 0;
+        let speed = 0.02;
+        const SWTNG = 60;    // 振幅
+
+        let rx = 200;  // 椭圆长半径
+        let ry = 60;   // 椭圆短半径
+ 
+        (function move() {
+            window.requestAnimationFrame(move);
+            ctx.clearRect(0, 0, w, h);
+
+            ctx.save();
+            ctx.translate(w / 2, h / 2);
+            ctx.scale(1, 0.4);
+
+            ctx.beginPath();
+            // ctx.arc(w / 2, h / 2, r, 0, Math.PI * 2);
+            ctx.arc(0, 0, rx, 0, Math.PI * 2 );
+            ctx.stroke();
+
+            ctx.restore();
+
+            //圆周运动
+            // ball.x = w / 2 + r * Math.cos(angle);
+            // ball.y = h / 2 + r * Math.sin(angle);
+
+            // 椭圆运动
+            ball.x = w / 2 + rx * Math.cos(angle);
+            ball.y = h / 2 + ry * Math.sin(angle);
+
+            angle += speed;
+            angle %= Math.PI * 2;    // 对角度取模
+            ball.render(ctx);
+        })();
+    </script> 
+</body>
+</html>

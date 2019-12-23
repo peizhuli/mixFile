@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../三角函数+向量/ball.js"></script>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        let w = canvas.width = 800;
+        let h = canvas.height = 600;
+ 
+        const ball = new Ball({
+            x: w/2,
+            y: h/2,
+            r: 35,
+        }).render(ctx);
+
+        // let vx = 1;
+        let vx = 20;
+        let vy = 1;
+        let speed = 20;
+        let angle = Math.PI / 180 * 30;
+        // let friction = 2.5;    //摩擦力
+        let friction = 0.9;    //摩擦力
+
+
+        (function move() {
+            window.requestAnimationFrame(move);
+            ctx.clearRect(0, 0, w, h);
+            // speed = speed - friction > 0 ? speed - friction : 0;            
+            // vx = Math.cos(angle) * speed;
+            // vy = Math.sin(angle) * speed;
+            // ball.x += vx;
+            // ball.y += vy;
+
+            if(Math.abs(vx) > 0.01) {
+                vx *= friction;                
+                ball.x += vx;
+            }
+            ball.render(ctx);
+        })();
+    </script> 
+</body>
+</html>
