@@ -1,0 +1,4 @@
+@import './modulA.css';
+body {
+    background: url(../img/avatar.jpg) center no-repeat;
+}
