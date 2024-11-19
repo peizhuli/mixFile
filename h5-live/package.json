@@ -16,6 +16,6 @@
     "eslint-plugin-standard": "^3.0.1"
   },
   "dependencies": {
-    "eslint": "^4.19.1"
+    "eslint": "^9.15.0"
   }
 }
